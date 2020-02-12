@@ -6,6 +6,7 @@ var Engineer = require("./lib/Engineer");
 const util = require("util");
 const fs = require("fs");
 const writeFileAsync = util.promisify(fs.writeFile);
+const appendFileAsync = util.promisify(fs.appendFile);
 
 
 function promptUser() {
@@ -33,8 +34,8 @@ function promptUser() {
   ])
 }
                 
-var Manager = function(){
-        inquirer.prompt([
+var ManagerC = function(){
+        return inquirer.prompt([
               {
                   type: "input",
                   name: "office",
@@ -43,8 +44,8 @@ var Manager = function(){
   ])
 }
 
-var Engineer = function(){
-   inquirer.prompt([
+var EngineerC = function(){
+   return inquirer.prompt([
       {
           type: "input",
           name: "github",
@@ -52,8 +53,8 @@ var Engineer = function(){
         }])
   }
   
-var Intern = function(){
-        inquirer.prompt([
+var InternC = function(){
+        return inquirer.prompt([
           {
               type: "input",
               name: "school",
@@ -62,38 +63,34 @@ var Intern = function(){
   ])
 }
 
-var employeeList= [];
 
 //---------------------------------------------------------------
 async function init() {
   try {
   const answers = await promptUser();
     if (answers.role == "Manager"){
-      var officeNumber = Manager();
-      var newManager = new Manager(answers.name, answers.email, answers.id, officeNumber);
+      var officeNumber = ManagerC();
+      var newManager = new Manager(answers.name, answers.role, answers.email, answers.id, officeNumber);
       var managerDiv = generateManagerHTML(newManager);
-      employeeList.push(managerDiv);
+      await writeFileAsync("index.html", generateHTML.concat(managerDiv).concat(end))
       console.log("Added a Manager Card!")
     }
     else if(answers.role == "Engineer"){
-      var getGithub = Engineer();
+      var getGithub = EngineerC();
       var newEngineer = new Engineer(answers.name, answers.email, answers.id, getGithub);
       var engineerDiv = generateEngineerHTML(newEngineer);
-     html.append(engineerDiv);
+      await writeFileAsync("index.html", generateHTML.concat(engineerDiv).concat(end));
      console.log("Added an Engineer Card!")
     }else{
-      var getSchool = Intern();
+      var getSchool = InternC();
       var newIntern = new Intern(answers.name, answers.email, answers.id, getSchool);
       var internDiv = generateInternHTML(newIntern);
-      html.append(internDiv);
+      await writeFileAsync("index.html", generateHTML.concat(internDiv).concat(end));
       console.log("Added an Intern Card!")
     }
   } catch (err) {
     console.log(err);
   }
-  generateHTML.append(employeeList);
-  var fullHTML = generateHTML.append(end);
-  await writeFileAsync("index.html", fullHTML)
 }
 init();
 
@@ -147,14 +144,13 @@ function generateInternHTML(intern){
       <p class="card-text">
                     <li>ID: ${intern.id}</li>
                     <li>E-mail: ${intern.email}</li>
-                    <li>Github: ${intern.school}</li>
+                    <li>School: ${intern.school}</li>
         </p>
     </div>
   </div>`;}
 
 
-var generateHTML = function(manager, engineer, intern){
-  return `
+var generateHTML = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -198,7 +194,7 @@ var generateHTML = function(manager, engineer, intern){
   <h1>Team Page</h1>
 </header>
 <body>
-    <div class="container">`;}
+    <div class="container">`;
 
 
 const end = `</div></body></html>`;
