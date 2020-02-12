@@ -70,20 +70,20 @@ async function init() {
   const answers = await promptUser();
     if (answers.role == "Manager"){
       var officeNumber = ManagerC();
-      var newManager = new Manager(answers.name, answers.email, answers.id, officeNumber);
+      var newManager = new Manager(answers.name, answers.id, answers.email, officeNumber);
       var managerDiv = generateManagerHTML(newManager);
       await writeFileAsync("index.html", generateHTML.concat(managerDiv).concat(end));
       console.log("Added a Manager Card!")
     }
     else if(answers.role == "Engineer"){
       var getGithub = EngineerC();
-      var newEngineer = new Engineer(answers.name, answers.email, answers.id, getGithub);
+      var newEngineer = new Engineer(answers.name, answers.id, answers.email, getGithub);
       var engineerDiv = generateEngineerHTML(newEngineer);
       await writeFileAsync("index.html", generateHTML.concat(engineerDiv).concat(end));
      console.log("Added an Engineer Card!")
     }else{
       var getSchool = InternC();
-      var newIntern = new Intern(answers.name, answers.email, answers.id, getSchool);
+      var newIntern = new Intern(answers.name, answers.id, answers.email, getSchool);
       var internDiv = generateInternHTML(newIntern);
       await writeFileAsync("index.html", generateHTML.concat(internDiv).concat(end));
       console.log("Added an Intern Card!")
