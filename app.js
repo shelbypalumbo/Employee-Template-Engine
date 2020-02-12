@@ -70,9 +70,9 @@ async function init() {
   const answers = await promptUser();
     if (answers.role == "Manager"){
       var officeNumber = ManagerC();
-      var newManager = new Manager(answers.name, answers.role, answers.email, answers.id, officeNumber);
+      var newManager = new Manager(answers.name, answers.email, answers.id, officeNumber);
       var managerDiv = generateManagerHTML(newManager);
-      await writeFileAsync("index.html", generateHTML.concat(managerDiv).concat(end))
+      await writeFileAsync("index.html", generateHTML.concat(managerDiv).concat(end));
       console.log("Added a Manager Card!")
     }
     else if(answers.role == "Engineer"){
@@ -102,7 +102,7 @@ return manager =
 `<div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
             <div class="card-header">
                 <h3>${manager.name}</h3>
-                <h4 class="card-title"><i class="fas fa-mug-hot"></i> ${manager.role}</h4>
+                <h4 class="card-title"><i class="fas fa-mug-hot"></i> Manager</h4>
             </div>
     <div class="card-body">
       <p class="card-text">
@@ -120,7 +120,7 @@ return engineer =
  `<div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
             <div class="card-header">
                 <h3>${engineer.name}</h3>
-                <h4 class="card-title"><i class="fas fa-glasses"></i> ${engineer.role}</h4>
+                <h4 class="card-title"><i class="fas fa-glasses"></i> Engineer</h4>
             </div>
     <div class="card-body">
       <p class="card-text">
@@ -138,7 +138,7 @@ function generateInternHTML(intern){
     ` <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
             <div class="card-header">
                 <h3>${intern.name}</h3>
-                <h4 class="card-title"><i class="fas fa-user-graduate"></i> ${intern.role}</h4>
+                <h4 class="card-title"><i class="fas fa-user-graduate"></i> Intern</h4>
             </div>
     <div class="card-body">
       <p class="card-text">
