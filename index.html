@@ -8,50 +8,78 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
       integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     
     <title>Employee Summary</title>
     <style>
-        header {    background-color: rgb(184, 92, 107);
-                    color: white;
-                    margin: 0;
-                    padding: 25px;
-                    text-align: center;
+      body {  background-color:rgb(196, 200, 255);
+      }
+      header {  background-color: rgb(43, 50, 156);
+                color: white;
+                margin: 0;
+                padding: 25px;
+                text-align: center;
                 }
-        li {    list-style-type: none;
-                border: 1px solid gray;
-                padding: 10px;
+        li {  list-style-type: none;
+              padding: 8px;
         }
-        .card-body {
-            background-color: white;
-            color: black;
+        .card-body {  background-color: white;
+                      color: black;
         }
-        .card-text {
-            background-color: white;
-            color: black;
+        .card-text {  background-color: white;
+                      color: black;
         }
-        .card{
-          box-shadow: 7px 7px 3px grey;
+        .card{  margin: 10px;
+                float:left;
+                box-shadow: 7px 7px 3px grey;
         }
-    
+        .card-header{ background-color: rgb(66, 77, 230);
+        }
+        h5{ color: black;
+        }
     </style>
 </head>
 <header>
-  <h1>Team Page</h1>
+  <h1>Team Employees</h1>
 </header>
 <body>
-    <div class="container"><div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+    <div class="container"><div class="card text-white mb-3" style="width: 18rem;">
             <div class="card-header">
-                <h3>Shelby</h3>
-                <h4 class="card-title"><i class="fas fa-mug-hot"></i> Manager</h4>
+                <h3>shelby</h3>
+                <h5 class="card-title"><i class="fas fa-mug-hot"></i> Manager</h5>
             </div>
     <div class="card-body">
       <p class="card-text">
-                    <li>ID: 12</li>
-                    <li>E-mail: shelby@gmail.com</li>
-                    <li>Office Number: [object Promise]</li>
+                    <li><b>ID:</b> 1234</li><hr>
+                    <li><b>E-mail:</b> shelby@gmail.com</li><hr>
+                    <li><b>Office Number:</b> 3466</li>
         </p>
     </div>
-  </div></div></body></html>
+  </div><div class="card text-white mb-3" style="width: 18rem;">
+            <div class="card-header">
+                <h3>Alex</h3>
+                <h5 class="card-title"><i class="fas fa-glasses"></i> Engineer</h5>
+            </div>
+    <div class="card-body">
+      <p class="card-text">
+                    <li><b>ID:</b> 23545</li><hr>
+                    <li><b>E-mail:</b> alex@gmail.com</li><hr>
+                    <li><b>Github:</b> alexN</li>
+        </p>
+    </div>
+  </div> <div class="card text-white mb-3" style="width: 18rem;">
+            <div class="card-header">
+                <h3>Loui</h3>
+                <h5 class="card-title"><i class="fas fa-user-graduate"></i> Intern</h5>
+            </div>
+    <div class="card-body">
+      <p class="card-text">
+                    <li><b>ID:</b> 2453</li><hr>
+                    <li><b>E-mail:</b> loui@gmail.com</li><hr>
+                    <li><b>School:</b> UCONN</li>
+        </p>
+    </div>
+  </div></div>
+          </body>
+        </html>
