@@ -7,7 +7,7 @@ const util = require("util");
 const fs = require("fs");
 const appendFileAsync = util.promisify(fs.appendFile);
 
-//---------------------Start of the HTML----------------------------------------------
+//---------------------Start of the HTML file--------------------------------------
 var generateHTML = `
 <!DOCTYPE html>
 <html lang="en">
@@ -23,31 +23,33 @@ var generateHTML = `
     
     <title>Employee Summary</title>
     <style>
-      body {  background-color:rgb(196, 200, 255);
+    /* Styling for the employee cards */
+    body {  background-color:rgb(196, 200, 255);
+    }
+    header {  background-color: rgb(43, 50, 156);
+              color: white;
+              margin: 0;
+              padding: 25px;
+              text-align: center;
+              }
+      li {  list-style-type: none;
+            padding: 8px;
       }
-      header {  background-color: rgb(43, 50, 156);
-                color: white;
-                margin: 0;
-                padding: 25px;
-                text-align: center;
-                }
-        li {  list-style-type: none;
-              padding: 8px;
-        }
-        .card-body {  background-color: white;
-                      color: black;
-        }
-        .card-text {  background-color: white;
-                      color: black;
-        }
-        .card{  margin: 10px;
-                float:left;
-                box-shadow: 7px 7px 3px grey;
-        }
-        .card-header{ background-color: rgb(66, 77, 230);
-        }
-        h5{ color: black;
-        }
+      .card-body, .card-text {  background-color: white;
+                    color: black;
+      }
+      .card{  margin: 10px;
+              float:left;
+              box-shadow: 7px 7px 3px grey;
+      }
+      .card-header{ background-color: rgb(66, 77, 230);
+      }
+      h5{ color: black;
+      }
+      .container {
+        margin:auto;
+        height:100vh;
+      }
     </style>
 </head>
 <header>
@@ -56,10 +58,10 @@ var generateHTML = `
 <body>
     <div class="container">`;
 
-// -------Generate Card for Manager -----------------------------------------
-function generateManagerHTML(manager) {
-  return manager =
-    `<div class="card text-white mb-3" style="width: 18rem;">
+//-------Generate Emplyee Card for a Manager -----------------------------------------
+function generateManagerCard(manager) {
+  return (manager = `
+  <div class="card text-white mb-3" style="width: 21rem;">
             <div class="card-header">
                 <h3>${manager.name}</h3>
                 <h5 class="card-title"><i class="fas fa-mug-hot"></i> Manager</h5>
@@ -71,13 +73,13 @@ function generateManagerHTML(manager) {
                     <li><b>Office Number:</b> ${manager.officeNumber}</li>
         </p>
     </div>
-  </div>`;
+  </div>`);
 }
 
-//-------Generate Card for Engineer -------------------------------------------
-function generateEngineerHTML(engineer) {
-  return engineer =
-    `<div class="card text-white mb-3" style="width: 18rem;">
+//-------Generate Employee Card for an Engineer -------------------------------------------
+function generateEngineerCard(engineer) {
+  return (engineer = `
+  <div class="card text-white mb-3" style="width: 21rem;">
             <div class="card-header">
                 <h3>${engineer.name}</h3>
                 <h5 class="card-title"><i class="fas fa-glasses"></i> Engineer</h5>
@@ -89,14 +91,13 @@ function generateEngineerHTML(engineer) {
                     <li><b>Github:</b> ${engineer.github}</li>
         </p>
     </div>
-  </div>`;
-};
+  </div>`);
+}
 
-
-//--------Generate Card for Intern -----------------------------------------------
-function generateInternHTML(intern) {
-  return intern =
-    ` <div class="card text-white mb-3" style="width: 18rem;">
+//--------Generate Employee Card for an Intern -----------------------------------------------
+function generateInternCard(intern) {
+  return (intern = ` 
+  <div class="card text-white mb-3" style="width: 21rem;">
             <div class="card-header">
                 <h3>${intern.name}</h3>
                 <h5 class="card-title"><i class="fas fa-user-graduate"></i> Intern</h5>
@@ -108,21 +109,22 @@ function generateInternHTML(intern) {
                     <li><b>School:</b> ${intern.school}</li>
         </p>
     </div>
-  </div>`;
-} 
+  </div>`);
+}
 
-//----End variable that gets appended when the user is done adding employees------
+//----The end variable gets appended to the end of the html file, once the user is done adding employees.
 const end = `</div>
           </body>
         </html>`;
 
-//------The begining of the HTML page is generated first, then the intial prompt function is called.
-fs.writeFile("index.html", generateHTML, function (err) {
+//---The begining of the HTML page is generated first, then the intial prompt function is called.
+//Write the generateHTML variable to the index.html file and
+fs.writeFile("index.html", generateHTML, function(err) {
   if (err) {
     return console.log(err);
   }
 });
-init(); //Initial prompts
+initialPrompt(); //Initial prompt function is first called
 
 //Initial prompt--------------------------------------------
 function promptUser() {
@@ -146,82 +148,96 @@ function promptUser() {
       type: "rawlist",
       name: "role",
       choices: ["Manager", "Engineer", "Intern"]
-    },
-  ])
+    }
+  ]);
 }
 
-
 //These functions are called based on what the users role selection is.
-var ManagerC = function () {
+//The user will then be prompted for more information about the employee.
+var managerCard = function() {
   return inquirer.prompt([
     {
       type: "input",
       name: "office",
       message: "What is the employees office number?"
     }
-  ])
-}
+  ]);
+};
 
-var EngineerC = function () {
+var engineerCard = function() {
   return inquirer.prompt([
     {
       type: "input",
       name: "github",
       message: "What is your employees Github username?"
-    }])
-}
+    }
+  ]);
+};
 
-var InternC = function () {
+var internCard = function() {
   return inquirer.prompt([
     {
       type: "input",
       name: "school",
       message: "Where does the employee attend school?"
-    },
-  ])
-}
-
+    }
+  ]);
+};
 
 //------------------------------------------------------------
-async function init() { 
+async function initialPrompt() {
   try {
     const answers = await promptUser();
     if (answers.role == "Manager") {
-      var officeNumber = await ManagerC(); //pauses the async function until the manager function executes 
-      var newManager = new Manager(answers.name, answers.id, answers.email, officeNumber.office);
-      var managerDiv = generateManagerHTML(newManager);
-      await appendFileAsync("index.html", managerDiv);
-      console.log("Added a Manager Card!")
-    }
-    else if (answers.role == "Engineer") {
-      var getGithub = await EngineerC();
-      var newEngineer = new Engineer(answers.name, answers.id, answers.email, getGithub.github);
-      var engineerDiv = generateEngineerHTML(newEngineer);
-      await appendFileAsync("index.html", (engineerDiv));
-      console.log("Added an Engineer Card!")
+      var officeNumber = await managerCard(); //Pauses the async function until the managerCard function executes each prompt
+      var newManager = new Manager(
+        answers.name,
+        answers.id,
+        answers.email,
+        officeNumber.office
+      );
+      var managerDiv = generateManagerCard(newManager); //Generate a manager card using the data received from prompts
+      await appendFileAsync("index.html", managerDiv); //Append manager card to the index.html file
+      console.log("Added a Manager Card!");
+    } else if (answers.role == "Engineer") {
+      var getGithub = await engineerCard();
+      var newEngineer = new Engineer(
+        answers.name,
+        answers.id,
+        answers.email,
+        getGithub.github
+      );
+      var engineerDiv = generateEngineerCard(newEngineer);
+      await appendFileAsync("index.html", engineerDiv);
+      console.log("Added an Engineer Card!");
     } else {
-      var getSchool = await InternC();
-      var newIntern = new Intern(answers.name, answers.id, answers.email, getSchool.school);
-      var internDiv = generateInternHTML(newIntern);
-      await appendFileAsync("index.html", (internDiv));
-      console.log("Added an Intern Card!")
+      var getSchool = await internCard();
+      var newIntern = new Intern(
+        answers.name,
+        answers.id,
+        answers.email,
+        getSchool.school
+      );
+      var internDiv = generateInternCard(newIntern);
+      await appendFileAsync("index.html", internDiv);
+      console.log("Added an Intern Card!");
     }
-    inquirer.prompt([
-      {
-        type: "rawlist",
-        name: "employee",
-        message: "Add another employee",
-        choices: ["Yes", "No"]
-      }
-    ]).then(
-      function (addEmployee) {
+    inquirer
+      .prompt([
+        {
+          type: "rawlist",
+          name: "employee",
+          message: "Add another employee",
+          choices: ["Yes", "No"]
+        }
+      ])
+      .then(function(addEmployee) {
         if (addEmployee.employee == "Yes") {
-          init();
+          initialPrompt();
         } else {
           appendFileAsync("index.html", end);
         }
-      }
-    )
+      });
   } catch (err) {
     console.log(err);
   }
