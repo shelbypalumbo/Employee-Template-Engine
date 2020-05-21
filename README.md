@@ -1,4 +1,4 @@
-# Template-Engine
+# Employee-Template-Engine
 
 A CLI Node employee template engine that generates a webpage displaying a company's employees basic information.
 
