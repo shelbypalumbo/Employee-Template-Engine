@@ -1,10 +1,16 @@
 # Template-Engine
 
-A CLI employee template engine application that generates a webpage displaying a company's employees basic information.
+A CLI Node employee template engine that generates a webpage displaying a company's employees basic information.
+
+##### View Demo Employee page:
+
+https://shelbypalumbo.github.io/Template-Engine/
+
+Demo Employee
 
 ## User Story
 
-As an Employer, I want to be able to display each employees name, role, and contact information, so that I can refer to a specific employee based on their profile.
+As an Employer, I want to be able to display each employees name, role, and contact information, so that I can refer to a specific employee based on their role.
 
 ## Usage
 
